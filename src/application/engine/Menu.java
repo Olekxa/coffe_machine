@@ -16,7 +16,7 @@ public class Menu {
             var response = scanner.next();
             switch (response) {
                 case "buy":
-                    result = makingCoffe(scanner, machine, result);
+                    result = makingCoffee(scanner, machine, result);
                     break;
                 case "fill":
                     makeFill(scanner, machine);
@@ -38,7 +38,7 @@ public class Menu {
         scanner.close();
     }
 
-    private String makingCoffe(Scanner scanner, Machine machine, String result) {
+    private String makingCoffee(Scanner scanner, Machine machine, String result) {
         System.out.println("What do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino, back - to main menu:");
         String number = scanner.next();
         switch (number) {
