@@ -1,11 +1,11 @@
 package application;
 
-import application.engine.Machine;
+import application.engine.Menu;
 
 public class Main {
     public static void main(String[] args) {
-        Machine machine = new Machine();
-        machine.run();
+        Menu menu = new Menu();
+        menu.run();
     }
 }
 

@@ -1,6 +1,6 @@
 package application.coffe;
 
-public abstract class Coffee {
+public class Coffee {
     private int water;
     private int milk;
     private int beans;
