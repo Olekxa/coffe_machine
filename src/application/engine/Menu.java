@@ -2,54 +2,50 @@ package application.engine;
 
 import application.coffe.Coffee;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Menu {
+    private final Scanner scanner;
+    private final Machine machine;
+
+    public Menu(Machine machine) {
+        this.machine = machine;
+        this.scanner = new Scanner(System.in);
+    }
 
     public void run() {
-        Scanner scanner = new Scanner(System.in);
-        Machine machine = new Machine();
         String result = "";
         boolean control = true;
         while (control) {
             System.out.println("Write action (buy, fill, take, remaining, exit):");
             var response = scanner.next();
             switch (response) {
-                case "buy":
-                    result = makingCoffee(scanner, machine, result);
-                    break;
-                case "fill":
-                    makeFill(scanner, machine);
-                    result ="";
-                    break;
-                case "take":
-                    result = machine.take();
-                    break;
-                case "remaining":
-                    result = machine.status();
-                    break;
-                default:
-                    result = "No such command";
-                case "exit":
-                    control = false;
+                case "buy" -> System.out.println(makingCoffee(scanner, machine, result));
+                case "fill" -> makeFill(scanner, machine);
+                case "take" -> System.out.println(machine.take());
+                case "remaining" -> System.out.println(machine.status());
+                default -> System.out.println("No such command");
+                case "exit" -> control = false;
             }
-            System.out.println(result);
         }
         scanner.close();
     }
 
     private String makingCoffee(Scanner scanner, Machine machine, String result) {
         System.out.println("What do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino, back - to main menu:");
+        Map<String, Coffee> recipeCoffee = recipeCoffee();
         String number = scanner.next();
         switch (number) {
             case "1":
-                result = machine.buy(new Coffee(250, 0, 16, 4));
+                result = machine.makeCoffee(recipeCoffee.get("espresso"));
                 break;
             case "2":
-                result = machine.buy(new Coffee(350, 75, 20, 7));
+                result = machine.makeCoffee(recipeCoffee.get("latte"));
                 break;
             case "3":
-                result = machine.buy(new Coffee(200, 100, 12, 6));
+                result = machine.makeCoffee(recipeCoffee.get("cappuccino"));
                 break;
             case "back":
                 break;
@@ -58,6 +54,14 @@ public class Menu {
                 break;
         }
         return result;
+    }
+
+    private Map<String, Coffee> recipeCoffee() {
+        Map<String, Coffee> recipeCoffee = new HashMap<>();
+        recipeCoffee.put("espresso", new Coffee(250, 0, 16, 4));
+        recipeCoffee.put("latte", new Coffee(350, 75, 20, 7));
+        recipeCoffee.put("cappuccino", new Coffee(200, 100, 12, 6));
+        return recipeCoffee;
     }
 
     private void makeFill(Scanner scanner, Machine machine) {

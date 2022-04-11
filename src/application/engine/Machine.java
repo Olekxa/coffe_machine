@@ -2,18 +2,12 @@ package application.engine;
 
 import application.coffe.Coffee;
 
-
-
 public class Machine {
     private int water;
     private int milk;
     private int beans;
     private int cup;
     private int money;
-
-    public Machine() {
-        this(400, 540, 120, 9, 550);
-    }
 
     public Machine(int water, int milk, int beans, int cup, int money) {
         this.water = water;
@@ -23,7 +17,6 @@ public class Machine {
         this.money = money;
     }
 
-
     public void fill(int waterIncome, int milkIncome, int beansIncome, int cupIncome) {
         beans += beansIncome;
         milk += milkIncome;
@@ -31,7 +24,7 @@ public class Machine {
         cup += cupIncome;
     }
 
-    public String buy(Coffee coffee) {
+    public String makeCoffee(Coffee coffee) {
         String check = checkResource(coffee);
         if ("".equals(check)) {
             water -= coffee.getWater();
@@ -61,14 +54,15 @@ public class Machine {
     }
 
     private String checkResource(Coffee coffee) {
+        String basis = "Sorry, not enough ";
         if (water - coffee.getWater() < 0) {
-            return "Sorry, not enough water!";
+            return basis + "water!";
         } else if (milk - coffee.getMilk() < 0) {
-            return "Sorry, not enough milk!";
+            return basis + "milk!";
         } else if (beans - coffee.getBeans() < 0) {
-            return "Sorry, not enough beans!";
+            return basis + "beans!";
         } else if (cup - 1 < 0) {
-            return "Sorry, not enough cup!";
+            return basis + "cup!";
         } else return "";
     }
 }
