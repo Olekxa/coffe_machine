@@ -17,13 +17,12 @@ public class Menu {
     }
 
     public void run() {
-        String result = "";
         boolean control = true;
         while (control) {
             System.out.println("Write action (buy, fill, take, remaining, exit):");
             var response = scanner.next();
             switch (response) {
-                case "buy" -> System.out.println(makingCoffee(result));
+                case "buy" -> System.out.println(makingCoffee());
                 case "fill" -> makeFill();
                 case "take" -> System.out.println(machine.take());
                 case "remaining" -> System.out.println(machine.status());
@@ -33,8 +32,9 @@ public class Menu {
         }
     }
 
-    private String makingCoffee(String result) {
-        System.out.println("What do you want to buy? " + parseRicipe() + "back - to main menu:");
+    private String makingCoffee() {
+        System.out.println("What do you want to buy? " + parseRecipe() + "back - to main menu:");
+        String result = "";
         String number = scanner.next();
         switch (number) {
             case "back":
@@ -50,11 +50,10 @@ public class Menu {
         return result;
     }
 
-    private String parseRicipe() {
+    private String parseRecipe() {
         StringBuilder builder = new StringBuilder();
-        for (String s : recipeBook.keySet()) {
-            String coffee = recipeBook.get(s).getName();
-            builder.append(s + " - " + coffee + ", ");
+        for (var entry : recipeBook.entrySet()) {
+            builder.append(entry.getKey()).append(" - ").append(entry.getValue().getName()).append(", ");
         }
         return builder.toString();
     }
